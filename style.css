@@ -1,0 +1,37 @@
+body {
+    overflow-x: hidden;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 290vw;
+    margin-top: 3vh;
+    display: grid;
+    grid-gap: 1vw;
+    grid-template-columns: repeat(3, 95vw); 
+    grid-template-rows: 94vh;   
+    justify-content: center; 
+    transition: 0.4s;
+    
+}
+
+.screen {
+    background-color: whitesmoke;
+    position: relative;
+}
+
+.next {
+    position:absolute;
+    bottom: 2.5em;
+    right: 2.5em;
+}
+
+.back {
+    position:absolute;
+    bottom: 2.5em;
+    left: 2.5em;
+}
