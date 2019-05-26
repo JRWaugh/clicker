@@ -1,20 +1,4 @@
-const grid = document.querySelector('.container')
-const clickerElement = document.getElementById("clicker")
-clickerElement.addEventListener('click', addCount)
-
-const amountElement = document.getElementById('amount')
-const autoThingerBtn = document.getElementById('at')
-autoThingerBtn.addEventListener('click', buyClicker)
-
-const autoThinger2Btn = document.getElementById('at2')
-// Do a for loop to find all the buttons.
-let count = 0
-amountElement.textContent = count
-
-let thing = {
-    modifier : 100.0
-};
-
+// Model for every automatic clicker in the game
 class Thinger {
     constructor(basePrice, growth, amount, modifier) {
         this.basePrice = basePrice;
@@ -23,56 +7,82 @@ class Thinger {
         this.modifier = modifier;
     }
     getPrice() {
-        return this.basePrice * Math.pow(this.growth, this.amount)
+        return Math.round(this.basePrice * Math.pow(this.growth, this.amount))
+    }
+    toString() {
+        return "Price: " + this.getPrice()
     }
 };
 
-let autoThinger = new Thinger(50, 1.2, 0, 1.0)
-let autoThinger2 = new Thinger(500, 1.2, 0, 1.0)
+// Variable to hold the number of 'things' generated
+let count = 0
+const counter = document.getElementById('counter')
+counter.innerHTML = count
 
-document.getElementById('at-price').textContent = 'Price: ' + autoThinger.basePrice
-document.getElementById('at2-price').textContent = 'Price: ' + autoThinger2.basePrice
+let thinger = new Thinger(0, 0, 0, 1.0)
+const thingerBtn = document.getElementById("thinger")
+thingerBtn.addEventListener('click', increment)
 
-function addCount() {
-    count += 1 * thing.modifier 
-    amountElement.textContent = count
-    buttonUpdate()
-}
+thingerBtn.previousElementSibling.innerHTML = count
 
-function buyClicker() {
-    count = count - autoThinger.getPrice()
-    amountElement.textContent = count
-    autoThinger.amount++
-    document.getElementById('at-price').textContent = 'Price: ' + autoThinger.getPrice()
-}
+let autoThingers = [new Thinger(50, 1.2, 0, 1.0), new Thinger(500, 1.2, 0, 10)]
 
-function buttonUpdate() {
-    // Do all this in a for loop
-    console.log(count)
-    console.log(autoThinger.getPrice())
-    if(count >= autoThinger.getPrice()) {
-        autoThingerBtn.removeAttribute('disabled')
-    } else {
-        autoThingerBtn.setAttribute('disabled', 'disabled')
-    }
-
-    if(count >= autoThinger2.getPrice()) {
-        autoThinger2Btn.removeAttribute('disabled')
-    } else {
-        autoThinger2Btn.setAttribute('disabled', 'disabled')
-    }
-}
+const autoThingerBtns = document.querySelectorAll('.auto-thinger')
+autoThingerBtns.forEach((btn, index) => {
+    btn.thinger = autoThingers[index]
+    btn.previousElementSibling.textContent = btn.thinger.toString()
+    btn.addEventListener('click', buyThinger)
+})
 
 const btnsNext = document.querySelectorAll('.next')
 for (const btn of btnsNext) {
     btn.addEventListener('click', function() {
-        grid.style.transform = "translate(" + (-95 * this.value) + "vw, 0)"
+        document.querySelector('.container').style.transform = "translate(" + (-95 * this.value) + "vw, 0)"
     });
 }
 
 const btnsBack = document.querySelectorAll('.back')
 for (const btn of btnsBack) {
     btn.addEventListener('click', function() {
-        grid.style.transform = "translate(" + (-95 * this.value) + "vw, 0)"
+        document.querySelector('.container').style.transform = "translate(" + (-95 * this.value) + "vw, 0)"
     });
 }
+
+function increment() {
+    counter.innerHTML = count++ + (1 * thinger.modifier)
+    buttonUpdate()
+}
+
+function buyThinger() {
+    count = count - this.thinger.getPrice()
+    counter.innerHTML = count
+    this.thinger.amount++
+    console.log()
+    this.previousElementSibling.textContent = this.thinger.toString()
+    buttonUpdate()
+}
+
+function buttonUpdate() {
+    autoThingerBtns.forEach((btn) => {
+        if(count >= btn.thinger.getPrice()) {
+            btn.removeAttribute('disabled')
+        } else {
+        btn.setAttribute('disabled', 'disabled')
+        }
+    })
+}
+
+function calculateIncrement() {
+    let increment = 0
+    autoThingerBtns.forEach((btn) => {
+        increment += btn.thinger.amount * btn.thinger.modifier
+    })
+    return increment
+}
+
+setInterval(() => {
+    count += calculateIncrement()
+    counter.innerHTML = count
+    buttonUpdate()
+}, 1000)
+

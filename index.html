@@ -1,31 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
+
 <body>
     <div class='container'>
         <div class='screen' id='first'>
-            <h1 id="amount"></h1>
-            <button type="button" id="clicker">Click Me!</button>
-            <h2 id="at-price">Price: </h2>
-            <button type="button" id="at" disabled='disabled'>Buy Me!</button>
-            <h2 id="at2-price">Price: </h2>
-            <button type="button" id="at2" disabled='disabled'>Buy Me!</button>
+            <div class='create'>
+                <h1 id="counter"></h1>
+                <button type="button" id="thinger">Click Me!</button>
+                <h2>Price:</h2>
+                <button type="button" class='auto-thinger' id='1' disabled='disabled'>Buy Me!</button>
+                <h2>Price:</h2>
+                <button type="button" class='auto-thinger' id='2' disabled='disabled'>Buy Me!</button>
+            </div>
+            <div class='display'></div>
+            <div class='stats'>
+                <h1>Stats</h1>
+            </div>
+
             <button type="button" class="next" value='1'>Next</button>
         </div>
         <div class='screen' id='second'>
-            <h1>Boop!</h1>
+            <div class='create'><h1>Boop!</h1></div>
+            <div class='display'></div>
+            <div class='stats'>
+                <h1>Stats</h1>
+            </div>
             <button type="button" class="next" value='2'>Next</button>
             <button type="button" class="back" value='0'>Back</button>
         </div>
-        <div class='screen' id='third'>
-            <h1>Boop2!</h1>
+        <div class='screen' id='third'>  
+            <div class='create'><h1>Boop2!</h1></div>
+            <div class='display'></div>
+            <div class='stats'>
+                <h1>Stats</h1>
+            </div>
             <button type="button" class="back" value='1'>Back</button>
         </div>
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>

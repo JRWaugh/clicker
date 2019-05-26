@@ -22,7 +22,24 @@ body {
 .screen {
     background-color: whitesmoke;
     position: relative;
+    padding: 1em;
+    display: flex;
+    flex-direction: row;
 }
+
+.screen div {
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.screen .display {
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 1em);
+    grid-template-rows: repeat(auto-fill, 1em);
+    background-color: black;
+}
+  
 
 .next {
     position:absolute;
